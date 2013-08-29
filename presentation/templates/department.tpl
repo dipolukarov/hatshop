@@ -3,5 +3,4 @@
 <p class="title">{$department->mNameLabel}</p>
 <br />
 <p class="description">{$department->mDescriptionLabel}</p>
-<br />
-Place list of products here
+{include file="products_list.tpl"}

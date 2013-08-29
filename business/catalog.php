@@ -92,7 +92,7 @@ class Catalog
 	{
 		// Query that returns the number of products in the category
 		$sql = 'SELECT catalog_count_products_in_category(:category_id);';
-		$params = [':categoryId' => $categoryId];
+		$params = [':category_id' => $categoryId];
 		// Calculate the number of pages required to display the products
 		$rHowManyPages = Catalog::HowManyPages($sql, $params);
 		// Calculate the start item
@@ -117,7 +117,7 @@ class Catalog
 	{
 		// Query that returns the number of products in the department page
 		$sql = 'SELECT catalog_count_products_on_department(:department_id);';
-		$params = [':departmentId' => $departmentId];
+		$params = [':department_id' => $departmentId];
 		// Calculate the number of pages required to display the products
 		$rHowManyPages = Catalog::HowManyPages($sql, $params);
 		// Calculate the start item

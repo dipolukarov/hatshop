@@ -1,6 +1,6 @@
 --
 --
-CREATE OR REPLACE FUNCTION catalog_count_products_in_department(
+CREATE OR REPLACE FUNCTION catalog_count_products_on_department(
 	inDepartmentID	category.department_id	%TYPE
 ) RETURNS int AS $_$
 DECLARE
