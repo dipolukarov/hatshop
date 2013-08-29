@@ -13,7 +13,7 @@ if (!isset($_GET['ProductID']))
 $page = new Page;
 
 // Define the template file for the page contents
-$pageContentsCell = 'blank.tpl';
+$pageContentsCell = 'first_page_contents.tpl';
 
 // Define the template file for the categories cell
 $categoriesCell = 'blank.tpl';
