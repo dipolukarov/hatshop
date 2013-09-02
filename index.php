@@ -24,6 +24,10 @@ if (isset($_GET['DepartmentID'])) {
 	$categoriesCell		= 'categories_list.tpl';
 }
 
+// Load product details page if visiting a product
+if (isset($_GET['ProductID']))
+	$pageContentsCell = 'product.tpl';
+
 // Assign a template file to the page contents cell
 $page->assign('pageContentsCell', $pageContentsCell);
 $page->assign('categoriesCell', $categoriesCell);

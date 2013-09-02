@@ -92,9 +92,9 @@ class ProductsList
 			$url = $_SESSION['page_link'];
 
 			if (count($_GET) > 0)
-				$url .= '&ProductID=';
+				$url = $url . '&ProductID=';
 			else
-				$url .= '?ProductID=';
+				$url = $url . '?ProductID=';
 
 			for ($i = 0; $i < count($this->mProducts); $i++) {
 				$this->mProducts[$i]['link'] = $url . $this->mProducts[$i]['id'];
