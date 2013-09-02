@@ -24,6 +24,10 @@ if (isset($_GET['DepartmentID'])) {
 	$categoriesCell		= 'categories_list.tpl';
 }
 
+// Load search result page if we're searching the catalog
+if (isset($_GET['Search']))
+	$pageContentsCell = 'search_results.tpl';
+
 // Load product details page if visiting a product
 if (isset($_GET['ProductID']))
 	$pageContentsCell = 'product.tpl';

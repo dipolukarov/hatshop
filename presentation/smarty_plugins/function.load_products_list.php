@@ -19,6 +19,10 @@ class ProductsList
 	public $mrHowManyPages;
 	public $mNextLink;
 	public $mPreviousLink;
+	public $mSearchResultsTitle;
+	public $mSearch = '';
+	public $mAllWords = 'off';
+	public $mSearchString;
 
 	// Private members
 	private $_mDepartmentId;
@@ -40,12 +44,38 @@ class ProductsList
 			$this->mPageNo = (int)$_GET['PageNo'];
 		else
 			$this->mPageNo = 1;
+
+		// Get search details from query string
+		if (isset($_GET['Search']))
+			$this->mSearchString = $_GET['Search'];
+
+		// Get all_words from query string
+		if (isset($_GET['AllWords']))
+			$this->mAllWords = $_GET['AllWords'];
 	}
 
 	public function init()
 	{
+		// If searching the catalog, get the list of products by calling the Search business tier method
+		if (isset($this->mSearchString)) {
+			// Get search results
+			$search_results = Catalog::Search($this->mSearchString, $this->mAllWords, $this->mPageNo, $this->mrHowManyPages);
+			// Get the list of products
+			$this->mProducts = $search_results['products'];
+			// Build the title for the list of products
+			if (count($search_results['accepted_words']) > 0)
+				$this->mSearchResultsTitle = 'Products containing <font class="words">'
+						. ($this->mAllWords == 'on' ? 'all' : 'any') . '</font>'
+						. ' of these words: <font class="words">' . implode(', ', $search_results['accepted_words'])
+						. '</font><br />';
+			if (count($search_results['ignored_words']) > 0)
+				$this->mSearchResultsTitle .= 'Ignored words: <font class="words">'
+						. implode(', ', $search_results['ignored_words']) . '</font><br />';
+			if (!(count($search_results['products']) > 0))
+				$this->mSearchResultsTitle .= 'Your search generated no results.<br />';
+		}
 		// If browsing a category, get the list of products by calling the GetProductsInCategory business tier method
-		if (isset($this->_mCategoryId))
+		elseif (isset($this->_mCategoryId))
 			$this->mProducts = Catalog::GetProductsInCategory($this->_mCategoryId, $this->mPageNo, $this->mrHowManyPages);
 		// If browsing a department, get the list of products by calling the GetProductsOnDepartmentDisplay business tier method
 		elseif (isset($this->_mDepartmentId))

@@ -171,3 +171,24 @@ a.product_name:hover {
 	margin: 0px;
 }
 
+#search_box {
+	border: 1px solid #0583b5;
+}
+
+#search_box p {
+	background: #0583b5;
+}
+
+form {
+	margin: 2px;
+}
+
+input {
+	font-family: tahoma, verdana, arial;
+	font-size: 11px;
+}
+
+.words {
+	color: #ff0000;
+}
+

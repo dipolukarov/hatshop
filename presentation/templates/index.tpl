@@ -11,6 +11,7 @@
 			<div class="left_box">
 				{include file="departments_list.tpl"}
 				{include file="$categoriesCell"}
+				{include file="search_box.tpl"}
 			</div>
 			{include file="header.tpl"}
 			<div id="content">

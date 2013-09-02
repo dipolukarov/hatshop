@@ -10,6 +10,9 @@ CREATE TABLE product
 	image			varchar(150),
 	thumbnail		varchar(150),
 	display			int NOT NULL DEFAULT 0,
+	search_vector		tsvector
 CONSTRAINT product_pk PRIMARY KEY (id)
 );
+
+CREATE INDEX idx_search_vector ON product USING gist(search_vector);
 

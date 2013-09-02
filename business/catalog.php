@@ -174,5 +174,87 @@ class Catalog
 		return DatabaseHandler::GetRow($result, $params);
 	}
 
+	// Flags stop words in search query
+	public static function FlagStopWords($words)
+	{
+		// build SQL query
+		$sql = 'SELECT * FROM catalog_flag_stop_words(:words);';
+		// Build the parameters array
+		$params = [':words' => '{' . implode(', ', $words) . '}'];
+		// Prepare the statement with PDO-specific functionality
+		$result = DatabaseHandler::Prepare($sql);
+
+		// Execute the query
+		$flags = DatabaseHandler::GetAll($result, $params);
+
+		$search_words = ['accepted_words' => [], 'ignored_words' => []];
+
+		for ($i = 0; $i < count($flags); $i++)
+			if ($flags[$i]['catalog_flag_stop_words'])
+				$search_words['ignored_words'][] = $words[$i];
+			else
+				$search_words['accepted_words'][] = $words[$i];
+
+		return $search_words;
+	}
+
+	// Search the catalog
+	public static function Search($searchString, $allWords, $pageNo, &$rHowManyPages)
+	{
+		// The search results will be an array of this form
+		$search_result = ['accepted_words' => [], 'ignored_words' => [], 'products' => []];
+		// Return void result if the search string is void
+		if (empty($searchString))
+			return $search_result;
+
+		// Search string delimiters
+		$delimiters = ',.; ';
+		// Use strtok to get the first word of the search string
+		$word = strtok($searchString, $delimiters);
+		$words = [];
+
+		// Build words array
+		while ($word) {
+			$words[] = $word;
+			// Get the next word of the search string
+			$word = strtok($delimiters);
+		}
+
+		// Split the search words in two categories: accepted and ignored
+		$search_words = Catalog::FlagStopWords($words);
+		$search_result['accepted_words'] = $search_words['accepted_words'];
+		$search_result['ignored_words'] = $search_words['ignored_words'];
+
+		// Return void result if all words are stop words
+		if (count($search_result['accepted_words']) == 0)
+			return $search_result;
+
+		// Count the number of search results
+		$sql = 'SELECT catalog_count_search_result(:words, :all_words);';
+		$params = [
+			':words'	=> '{' . implode(', ', $search_result['accepted_words']) . '}',
+			':all_words'	=> $allWords
+		];
+		// Calculate the number of pages required to displey the products
+		$rHowManyPages = Catalog::HowManyPages($sql, $params);
+		// Calculate the start item
+		$start_item = ($pageNo - 1) * PRODUCTS_PER_PAGE;
+
+		// Retrieve the list of matching products
+		$sql = 'SELECT * FROM catalog_search(:words, :all_words, :short_product_description_length, :products_per_page, :start_page);';
+		$params = [
+			':words'				=> '{' . implode(', ', $search_result['accepted_words']) . '}',
+			':all_words'				=> $allWords,
+			':short_product_description_length'	=> SHORT_PRODUCT_DESCRIPTION_LENGTH,
+			':products_per_page'			=> PRODUCTS_PER_PAGE,
+			':start_page'				=> $start_item
+		];
+
+		// Prepare and execute the query, and return the results
+		$result = DatabaseHandler::Prepare($sql);
+		$search_result['products'] = DatabaseHandler::GetAll($result, $params);
+		return $search_result;
+	}
+
 }
 

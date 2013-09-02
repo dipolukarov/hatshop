@@ -1,5 +1,8 @@
 {* products_list.tpl *}
 {load_products_list assign="products_list"}
+{if $products_list->mSearchResultsTitle != ""}
+	<p class="description">{$products_list->mSearchResultsTitle}</p>
+{/if}
 {if $products_list->mrHowManyPages > 1}
 	<br />
 	<span class="paging_text">
