@@ -18,4 +18,4 @@ ${$product->mProduct.price}
 	<span class="price">&nbsp;${$product->mProduct.discounted_price}</span>
 {/if}
 <br /><br />
-<input type="button" value="Continue Shopping" onclick="window.location='{$product->mPageLink|pprepare_link:"http"}'" />
+<input type="button" value="Continue Shopping" onclick="window.location='{$product->mPageLink|prepare_link:"http"}'" />

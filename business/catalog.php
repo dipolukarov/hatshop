@@ -161,7 +161,7 @@ class Catalog
 	}
 
 	// Retrieves complete product details
-	public static function GetProductsDetails($productId)
+	public static function GetProductDetails($productId)
 	{
 		// Build SQL query
 		$sql = 'SELECT * FROM catalog_get_product_details(:product_id);';

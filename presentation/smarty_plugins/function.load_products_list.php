@@ -87,18 +87,18 @@ class ProductsList
 				$new_query_string = str_replace('PageNo=' . $this->mPageNo, 'PageNo=' . ($this->mPageNo - 1), $query_string);
 				$this->mPreviousLink = 'index.php?' . $new_query_string;
 			}
+		}
 
-			// Build links for products details pages
-			$url = $_SESSION['page_link'];
+		// Build links for products details pages
+		$url = $_SESSION['page_link'];
 
-			if (count($_GET) > 0)
-				$url = $url . '&ProductID=';
-			else
-				$url = $url . '?ProductID=';
+		if (count($_GET) > 0)
+			$url = $url . '&ProductID=';
+		else
+			$url = $url . '?ProductID=';
 
-			for ($i = 0; $i < count($this->mProducts); $i++) {
-				$this->mProducts[$i]['link'] = $url . $this->mProducts[$i]['id'];
-			}
+		for ($i = 0; $i < count($this->mProducts); $i++) {
+			$this->mProducts[$i]['link'] = $url . $this->mProducts[$i]['id'];
 		}
 	}
 

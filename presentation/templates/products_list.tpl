@@ -25,7 +25,7 @@
 		<br />
 	{/if}
 	<p class="{$direction_p}">
-		<a class="product_name" href="{$product_list->mProducts[k].link|prepare_link:"http"}">{$products_list->mProducts[k].name}</a>
+		<a class="product_name" href="{$products_list->mProducts[k].link|prepare_link:"http"}">{$products_list->mProducts[k].name}</a>
 		<br />
 		<a href="{$products_list->mProducts[k].link|prepare_link:"http"}"><img src="product_images/{$products_list->mProducts[k].thumbnail}" border="0" width="120" alt="Product image" class="product_image" /></a>
 		<span class="product_description">{$products_list->mProducts[k].description}</span>
