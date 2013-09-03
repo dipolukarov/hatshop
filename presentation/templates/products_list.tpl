@@ -43,5 +43,7 @@
 		{if $products_list->mProducts[k].discounted_price != 0}
 			<span class="price">&nbsp;${$products_list->mProducts[k].discounted_price}</span>
 		{/if}
+		<br /><br />
+		<input type="button" name="add_to_cart" value="Add to Cart" onclick="{$products_list->mProducts[k].paypal}" />
 	</p>
 {/section}

@@ -129,6 +129,15 @@ class ProductsList
 
 		for ($i = 0; $i < count($this->mProducts); $i++) {
 			$this->mProducts[$i]['link'] = $url . $this->mProducts[$i]['id'];
+
+			// Create the PayPal link
+			$this->mProducts[$i]['paypal'] = 'JavaScript:OpenPayPalWindow(&quot;'
+					. 'https://www.paypal.com/cgi-bin/webscr?'
+					. 'cmd=_cart&amp;business=dipolukarov@gmail.com'
+					. '&amp;item_name=' . rawurlencode($this->mProducts[$i]['name'])
+					. '&amp;amount=' . (($this->mProducts[$i]['discounted_price'] == 0) ? $this->mProducts[$i]['price'] : $this->mProducts[$i]['discounted_price'])
+					. '&amp;currency=USD&amp;add=1&amp;return=localhost.vm'
+					. '&amp;cancel_return=localhost.vm&quot;)';
 		}
 	}
 
