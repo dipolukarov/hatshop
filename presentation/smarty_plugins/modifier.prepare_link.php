@@ -4,7 +4,7 @@ function smarty_modifier_prepare_link($string, $link_type = 'http')
 {
 	// Use SSL
 	if ($link_type == 'https' && USE_SSL == 'no')
-		$link_typs = 'http';
+		$link_type = 'https';
 	
 	switch ($link_type) {
 		case 'http':
@@ -23,7 +23,7 @@ function smarty_modifier_prepare_link($string, $link_type = 'http')
 		case 'https':
 			$link = 'https://' . getenv('SERVER_NAME') . VIRTUAL_LOCATION . $string;
 			// Escape html
-			return htmlspecialchars($link. ENT_QUOTES);
+			return htmlspecialchars($link, ENT_QUOTES);
 		default:
 			return htmlspecialchars($string, ENT_QUOTES);
 	}
