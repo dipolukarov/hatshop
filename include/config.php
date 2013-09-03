@@ -54,3 +54,7 @@ define('USE_SSL', 'yes');
 define('SHORT_PRODUCT_DESCRIPTION_LENGTH', 150);
 define('PRODUCTS_PER_PAGE', 4);
 
+// Administration login information
+define('ADMIN_USERNAME', 'hatshopadmin');
+define('ADMIN_PASSWORD', '777');
+
