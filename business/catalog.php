@@ -256,5 +256,65 @@ class Catalog
 		return $search_result;
 	}
 
+	// Retrieves all departments with their descriptions
+	public static function GetDepartmentsWithDescriptions()
+	{
+		// Build the SQL query
+		$sql = ' SELECT * FROM catalog_get_departments(); ';
+		// Prepare the statement with PDO-specific functionality
+		$result = DatabaseHandler::Prepare($sql);
+
+		return DatabaseHandler::GetAll($result);
+	}
+
+	// Updates department details
+	public static function UpdateDepartment($departmentId, $departmentName, $departmentDescription)
+	{
+		// Build the SQL query
+		$sql = ' SELECT catalog_update_department(:department_id, :department_name, :department_description); ';
+		// Build the parameters array
+		$params = [
+			':department_id'		=> $departmentId,
+			':department_name'		=> $departmentName,
+			':department_description'	=> $departmentDescription
+		];
+		// Prepare the statement with PDO-specific functionality
+		$result = DatabaseHandler::Prepare($sql);
+
+		// Execute the query
+		return DatabaseHandler::Execute($result, $params);
+	}
+
+	// Deletes a department
+	public static function DeleteDepartment($departmentId)
+	{
+		// Build the SQL query
+		$sql = ' SELECT catalog_delete_department(:department_id); ';
+		// Build the parameters array
+		$params = [':department_id' => $departmentId];
+		// Prepare the statement with PDO-specific functionality
+		$result = DatabaseHandler::Prepare($sql);
+
+		// Execute the query and return the results
+		return DatabaseHandler::GetOne($result, $params);
+	}
+
+	// Add a department
+	public static function AddDepartment($departmentName, $departmentDescription)
+	{
+		// Build the SQL query
+		$sql = ' SELECT catalog_add_department(:department_name, :department_description); ';
+		// Build the parameters array
+		$params = [
+			':department_name'		=> $departmentName,
+			':department_description'	=> $departmentDescription
+		];
+		// Prepare the statement with PDO-specific functionality
+		$result = DatabaseHandler::Prepare($sql);
+
+		// Execute the query
+		return DatabaseHandler::Execute($result, $params);
+	}
+
 }
 

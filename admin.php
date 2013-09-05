@@ -24,12 +24,21 @@ else {
 	// If admin is logged, load the admin page menu
 	$pageMenuCell = 'admin_menu.tpl';
 
+	if (isset($_GET['Page']))
+		$admin_page = $_GET['Page'];
+	else // If Page is not explicitly set, assume the Departments page
+		$admin_page = 'Departments';
+
 	// If loggin out
 	if (isset($_GET['Page']) && ($_GET['Page'] == 'Logout')) {
 		unset($_SESSION['admin_logged']);
 		header('Location: admin.php');
 		exit;
 	}
+
+	// Choose what admin page to load ...
+	if ($admin_page == 'Departments')
+		$pageContentsCell = 'admin_departments.tpl';
 }
 
 // Assign templates file to be loaded
